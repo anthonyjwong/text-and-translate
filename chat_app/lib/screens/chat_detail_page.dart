@@ -79,10 +79,10 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                     icon:
                         const Icon(Icons.arrow_back_ios, color: Colors.black)),
                 const SizedBox(width: 2),
-                const CircleAvatar(
-                  backgroundImage: NetworkImage(
-                      "https://randomuser.me/api/portraits/men/5.jpg"),
-                ),
+                // const CircleAvatar(
+                //   backgroundImage: NetworkImage(
+                //       "https://randomuser.me/api/portraits/men/5.jpg"),
+                // ),
                 const SizedBox(width: 12),
                 Expanded(
                     child: Column(
