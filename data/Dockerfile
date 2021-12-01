@@ -10,6 +10,6 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-ENV FLASK_APP=data/app.py
+ENV FLASK_APP=main.py
 
 CMD [ "python", "-m", "flask", "run", "--host=0.0.0.0", "--port=3000"]
