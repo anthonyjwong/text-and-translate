@@ -60,46 +60,6 @@ class _ChatPageState extends State<ChatPage> {
           physics: const BouncingScrollPhysics(),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            SafeArea(
-                child: Padding(
-                    padding:
-                        const EdgeInsets.only(left: 16, right: 16, top: 10),
-                    child: Stack(
-                      children: [
-                        const Align(
-                            alignment: Alignment.topLeft,
-                            child: CircleAvatar(
-                              radius: 16,
-                              backgroundImage: NetworkImage(
-                                  "https://i.imgur.com/BoN9kdC.png"),
-                            )),
-                        const Align(
-                            alignment: Alignment.center,
-                            child: Expanded(
-                                child: Center(
-                                    child: Text(
-                              "Messages",
-                              style: TextStyle(
-                                  fontSize: 24, fontWeight: FontWeight.bold),
-                            )))),
-                        Align(
-                            alignment: Alignment.topRight,
-                            child: Container(
-                              padding: const EdgeInsets.only(
-                                  left: 8, right: 8, top: 2, bottom: 2),
-                              height: 30,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(30),
-                                color: Colors.blue[50],
-                              ),
-                              child: const Icon(
-                                Icons.create_rounded,
-                                color: Colors.blue,
-                                size: 20,
-                              ),
-                            )),
-                      ],
-                    ))),
             Padding(
                 padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
                 child: TextField(
@@ -110,25 +70,35 @@ class _ChatPageState extends State<ChatPage> {
                             color: Colors.grey.shade600, size: 20),
                         filled: true,
                         fillColor: Colors.grey.shade100,
-                        contentPadding: const EdgeInsets.all(8),
+                        contentPadding: const EdgeInsets.only(left: 8),
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide: BorderSide.none),
                         enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
-                            borderSide:
-                                BorderSide(color: Colors.grey.shade100))))),
-            ListView.builder(
-                itemCount: chatUsers.length,
-                shrinkWrap: true,
-                padding: const EdgeInsets.only(top: 16),
-                physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return ConversationList(
-                    name: chatUsers[index].name,
-                    messageText: chatUsers[index].messageText,
-                    imageURL: chatUsers[index].imageURL,
-                    time: chatUsers[index].time,
-                    isMessageRead: (index == 0 || index == 3) ? true : false,
-                  );
-                }),
+                            borderSide: BorderSide.none)))),
+            ListView.separated(
+              itemCount: chatUsers.length + 2,
+              shrinkWrap: true,
+              padding: const EdgeInsets.only(top: 5),
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                if (index == 0 || index == chatUsers.length + 1) {
+                  return Container();
+                }
+                index = index - 1;
+                return ConversationList(
+                  name: chatUsers[index].name,
+                  messageText: chatUsers[index].messageText,
+                  imageURL: chatUsers[index].imageURL,
+                  time: chatUsers[index].time,
+                  isMessageRead: (index == 0 || index == 3) ? true : false,
+                );
+              },
+              separatorBuilder: (context, index) {
+                return const Divider(color: Colors.grey);
+              },
+            ),
           ])),
     );
   }

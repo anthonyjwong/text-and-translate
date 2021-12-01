@@ -32,14 +32,14 @@ class _ConversationListState extends State<ConversationList> {
         },
         child: Container(
             padding:
-                const EdgeInsets.only(left: 16, right: 16, top: 10, bottom: 10),
+                const EdgeInsets.only(left: 8, right: 16, top: 10, bottom: 10),
             child: Row(children: [
               Expanded(
                   child: Row(children: [
-                CircleAvatar(
-                  backgroundImage: NetworkImage(widget.imageURL),
-                  maxRadius: 30,
-                ),
+                // CircleAvatar(
+                //   backgroundImage: NetworkImage(widget.imageURL),
+                //   maxRadius: 30,
+                // ),
                 const SizedBox(
                   width: 16,
                 ),
@@ -49,7 +49,11 @@ class _ConversationListState extends State<ConversationList> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(widget.name, style: const TextStyle(fontSize: 16)),
+                        Text(widget.name,
+                            style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold)),
                         const SizedBox(height: 6),
                         Text(widget.messageText,
                             style: TextStyle(
