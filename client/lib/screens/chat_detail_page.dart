@@ -15,7 +15,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
   List<ChatMessage> messages = [];
 
   void _getMessages() async {
-    final response = await http.get(Uri.parse("http://localhost:3000/hello"));
+    final response = await http.get(Uri.parse("http://0.0.0.0:3000/hello"));
     setState(() {
       messages = jsonDecode(response.body)["messages"]
           .map<ChatMessage>((data) => ChatMessage.fromJson(data))

@@ -1,11 +1,21 @@
+from db.sqlalchemy_db import init_db_connection
+from db.models import instantiate_tables
 from flask import Flask
 from flask import request
+from os import getenv
+
+port = getenv("PORT") or 3000
 
 app = Flask(__name__)
 
 
-@app.route('/hello', methods=['GET'])
-def hello():
+@app.route('/send/<user>', methods=['POST'])
+def send(user):
+    return {'message': f'Hi, {user}.'}, 200
+
+
+@app.route('/receive/<user>', methods=['GET'])
+def receive(user):
     return {
         'messages': [
             {
@@ -20,17 +30,15 @@ def hello():
     }, 200
 
 
-@app.route('/hello/<name>', methods=['POST'])
-def hello_name(name):
-    return {'message': f'Hi, {name}.'}, 200
+def init_app():
+    init_db_connection()
+    instantiate_tables()
 
 
-@app.route('/test', methods=['GET', 'POST'])
-def test():
-    if request.method == 'GET':
-        return {'message': 'test is successful'}, 200
-    elif request.method == 'POST':
-        msg = request.args.get('msg')
-        if msg == None:
-            return 'Bad Request', 400
-        return {'message': f'{msg}'}, 200
+def main():
+    init_app()
+    app.run(host="0.0.0.0", port=port)
+
+
+if __name__ == "__main__":
+    main()

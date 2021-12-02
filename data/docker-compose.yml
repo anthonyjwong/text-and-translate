@@ -1,0 +1,27 @@
+version: '3.7'
+
+services:
+  postgres:
+    image: postgres:alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: messenger
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: messenger
+      POSTGRES_HOST: postgres
+    ports:
+      - '3000:3000'
+    depends_on:
+      - "postgres"
