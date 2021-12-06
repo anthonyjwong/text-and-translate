@@ -5,6 +5,7 @@ from db.models import instantiate_tables
 from db.sqlalchemy_db import init_db_connection
 from flask import Flask
 from flask import request
+from nlp.translate import translate_conversation
 from os import getenv
 
 port = getenv("PORT") or 3000
@@ -32,6 +33,7 @@ def get_last_message(user1_id, user2_id):
     conversation = sorted(conversation, key=lambda x: x["sent_at"])
 
     lang_pref = user_handler.get_user_by_id(user1_id)["lang"]
+    conversation = translate_conversation(conversation, lang_pref)
 
     return {"message": conversation[-2:-1]}, 200
 
