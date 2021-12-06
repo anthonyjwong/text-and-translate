@@ -4,6 +4,9 @@ import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+const user_1 = "643cd96a-3034-46a4-b757-6a1161dcce26";
+const user_2 = "59b322f2-5ac1-49ad-b601-8771cab234a0";
+
 class ChatDetailPage extends StatefulWidget {
   const ChatDetailPage({Key? key}) : super(key: key);
 
@@ -15,7 +18,8 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
   List<ChatMessage> messages = [];
 
   void _getMessages() async {
-    final response = await http.get(Uri.parse("http://0.0.0.0:3000/hello"));
+    final response = await http
+        .get(Uri.parse("http://0.0.0.0:3000/conversation/$user_1/$user_2"));
     setState(() {
       messages = jsonDecode(response.body)["messages"]
           .map<ChatMessage>((data) => ChatMessage.fromJson(data))
@@ -153,7 +157,9 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                         ),
                         const SizedBox(width: 15),
                         FloatingActionButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              _getMessages();
+                            },
                             child: const Icon(Icons.send,
                                 color: Colors.blue, size: 18),
                             backgroundColor: Colors.white,

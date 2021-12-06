@@ -12,4 +12,4 @@ COPY . .
 
 ENV FLASK_APP=main.py
 
-CMD [ "python", "main.py" ]
+CMD [ "python", "-u", "main.py" ]
