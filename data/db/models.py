@@ -1,18 +1,14 @@
 
 from datetime import datetime
-from db.sqlalchemy_db import create_table, get_engine
-from sqlalchemy import (
-    Column,
-    Integer,
-    String,
-    DateTime,
-    ForeignKey,
-)
+from uuid import uuid4
+
+from sqlalchemy import Column, DateTime, ForeignKey, Integer, String
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import validates
 from sqlalchemy.sql.sqltypes import Text
-from uuid import uuid4
+
+from db.sqlalchemy_db import create_table, get_engine
 
 Base = declarative_base()
 
@@ -74,6 +70,7 @@ class Message(Base):
     receiver = f_key_column("user.id")
     sent_at = Column(DateTime, default=get_datettime)
     message_content = Column(String)
+    lang = Column(String)
 
     @property
     def serialize(self):

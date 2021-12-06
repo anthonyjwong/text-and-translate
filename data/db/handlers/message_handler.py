@@ -1,4 +1,5 @@
 from datetime import datetime
+
 from db.models import Message
 from db.sqlalchemy_db import create_session
 

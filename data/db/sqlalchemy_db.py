@@ -1,9 +1,9 @@
 from contextlib import contextmanager
 from os import getenv
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
 from time import sleep
 
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 
 # init in init_db_connection
 engine = None
