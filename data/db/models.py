@@ -51,6 +51,7 @@ class User(Base):
 
     id = p_key_column()
     name = Column(String)
+    lang = Column(String)
 
     @property
     def serialize(self):
@@ -60,7 +61,8 @@ class User(Base):
         """
         return {
             "id": self.id,
-            "name": self.name
+            "name": self.name,
+            "lang": self.lang
         }
 
 

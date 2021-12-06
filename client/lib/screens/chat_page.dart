@@ -12,7 +12,7 @@ class ChatPage extends StatefulWidget {
 class _ChatPageState extends State<ChatPage> {
   List<ChatUsers> chatUsers = [
     ChatUsers(
-        name: "Jane Russel",
+        name: "Anthony Wong",
         messageText: "Awesome Setup",
         imageURL: "images/userImage1.jpeg",
         time: "Now"),

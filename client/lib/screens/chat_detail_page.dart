@@ -4,8 +4,9 @@ import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-const user_1 = "643cd96a-3034-46a4-b757-6a1161dcce26";
-const user_2 = "59b322f2-5ac1-49ad-b601-8771cab234a0";
+const String url = "0.0.0.0:3000";
+const String user_1 = "fdd0de83-263e-4981-ab40-957091339396";
+const String user_2 = "8a0ff377-0979-4cfa-9fa1-eed8e4e4cdb3";
 
 class ChatDetailPage extends StatefulWidget {
   const ChatDetailPage({Key? key}) : super(key: key);
@@ -16,10 +17,26 @@ class ChatDetailPage extends StatefulWidget {
 
 class _ChatDetailPageState extends State<ChatDetailPage> {
   List<ChatMessage> messages = [];
+  TextEditingController sendControl = TextEditingController();
+
+  void _sendMessage(String text) async {
+    if (text.isNotEmpty) {
+      Map body = {
+        "sender": user_1,
+        "receiver": user_2,
+        "content": text,
+      };
+
+      await http.post(Uri.parse("http://$url/message/send"),
+          headers: {"Content-Type": "application/json"},
+          body: json.encode(body));
+      _getMessages();
+    }
+  }
 
   void _getMessages() async {
-    final response = await http
-        .get(Uri.parse("http://0.0.0.0:3000/conversation/$user_1/$user_2"));
+    final response =
+        await http.get(Uri.parse("http://$url/conversation/$user_1/$user_2"));
     setState(() {
       messages = jsonDecode(response.body)["messages"]
           .map<ChatMessage>((data) => ChatMessage.fromJson(data))
@@ -61,7 +78,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                      const Text("Kriss Benwat",
+                      const Text("Anthony Wong",
                           style: TextStyle(
                               fontSize: 16, fontWeight: FontWeight.w600)),
                       const SizedBox(height: 6),
@@ -138,27 +155,28 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                         //             color: Colors.white, size: 20))),
                         const SizedBox(width: 15),
                         Expanded(
-                          child: TextField(
-                              decoration: InputDecoration(
-                                  hintText: "Write message...",
-                                  hintStyle:
-                                      const TextStyle(color: Colors.black54),
-                                  border: InputBorder.none,
-                                  filled: true,
-                                  fillColor: Colors.grey.shade100,
-                                  contentPadding:
-                                      const EdgeInsets.only(left: 17),
-                                  focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(20),
-                                      borderSide: BorderSide.none),
-                                  enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(20),
-                                      borderSide: BorderSide.none))),
-                        ),
+                            child: TextField(
+                                decoration: InputDecoration(
+                                    hintText: "Write message...",
+                                    hintStyle:
+                                        const TextStyle(color: Colors.black54),
+                                    border: InputBorder.none,
+                                    filled: true,
+                                    fillColor: Colors.grey.shade100,
+                                    contentPadding:
+                                        const EdgeInsets.only(left: 17),
+                                    focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(20),
+                                        borderSide: BorderSide.none),
+                                    enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(20),
+                                        borderSide: BorderSide.none)),
+                                controller: sendControl)),
                         const SizedBox(width: 15),
                         FloatingActionButton(
                             onPressed: () {
-                              _getMessages();
+                              _sendMessage(sendControl.text);
+                              sendControl.text = "";
                             },
                             child: const Icon(Icons.send,
                                 color: Colors.blue, size: 18),

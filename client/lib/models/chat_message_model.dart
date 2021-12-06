@@ -1,5 +1,5 @@
 class ChatMessage {
-  static const user = "643cd96a-3034-46a4-b757-6a1161dcce26";
+  static const String user = "fdd0de83-263e-4981-ab40-957091339396";
   ChatMessage(
       {required this.messageContent,
       required this.messageType,

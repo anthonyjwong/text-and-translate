@@ -23,6 +23,17 @@ def get_conversation(user_1, user_2):
     return {"messages": conversation}, 200
 
 
+@app.route('/last/<user_1>/<user_2>', methods=['GET'])
+def get_last_message(user_1, user_2):
+    if user_1 is None or user_2 is None:
+        return {"error": "must provide user_1 and user_2 in request body"}, 400
+
+    conversation = message_handler.get_conversation(user_1, user_2)
+    conversation = sorted(conversation, key=lambda x: x['sent_at'])
+
+    return {"message": conversation[-2:-1]}, 200
+
+
 @app.route('/create/<name>', methods=['POST'])
 def create_user(name):
     try:
@@ -42,8 +53,8 @@ def send_message():
             request.json["content"]
         )
     except Exception:
-        return None, 500
-    return message, 200
+        return {"error": "couldn't send message"}, 500
+    return {"message_id": message["id"]}, 200
 
 
 def init_app():

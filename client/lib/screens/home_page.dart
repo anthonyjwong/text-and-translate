@@ -20,8 +20,8 @@ class HomePage extends StatelessWidget {
                           alignment: Alignment.topLeft,
                           child: CircleAvatar(
                             radius: 16,
-                            backgroundImage:
-                                NetworkImage("https://i.imgur.com/BoN9kdC.png"),
+                            backgroundImage: NetworkImage(
+                                "https://scontent-sjc3-1.xx.fbcdn.net/v/t1.6435-9/49810337_995315940655099_5268722229809512448_n.jpg?_nc_cat=100&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=jzVe9aCQto8AX-dfsBz&tn=uNSCaCY3NPOf0Dus&_nc_ht=scontent-sjc3-1.xx&oh=70a31bc78c96d30cd3b3d9f6ffa7b8a0&oe=61D190F3"),
                           )),
                       const Align(
                           alignment: Alignment.center,
