@@ -12,29 +12,31 @@ port = getenv("PORT") or 3000
 app = Flask(__name__)
 
 
-@app.route('/conversation/<user_1>/<user_2>', methods=['GET'])
+@app.route("/conversation/<user_1>/<user_2>", methods=["GET"])
 def get_conversation(user_1, user_2):
     if user_1 is None or user_2 is None:
         return {"error": "must provide user_1 and user_2 in request body"}, 400
 
     conversation = message_handler.get_conversation(user_1, user_2)
-    conversation = sorted(conversation, key=lambda x: x['sent_at'])
+    conversation = sorted(conversation, key=lambda x: x["sent_at"])
 
     return {"messages": conversation}, 200
 
 
-@app.route('/last/<user_1>/<user_2>', methods=['GET'])
-def get_last_message(user_1, user_2):
-    if user_1 is None or user_2 is None:
+@app.route("/last/<user_1>/<user_2>", methods=["GET"])
+def get_last_message(user1_id, user2_id):
+    if user1_id is None or user2_id is None:
         return {"error": "must provide user_1 and user_2 in request body"}, 400
 
-    conversation = message_handler.get_conversation(user_1, user_2)
-    conversation = sorted(conversation, key=lambda x: x['sent_at'])
+    conversation = message_handler.get_conversation(user1_id, user2_id)
+    conversation = sorted(conversation, key=lambda x: x["sent_at"])
+
+    lang_pref = user_handler.get_user_by_id(user1_id)["lang"]
 
     return {"message": conversation[-2:-1]}, 200
 
 
-@app.route('/create/<name>', methods=['POST'])
+@app.route("/create/<name>", methods=["POST"])
 def create_user(name):
     try:
         user = user_handler.create_user(name)
@@ -43,7 +45,7 @@ def create_user(name):
     return user, 200
 
 
-@app.route('/message/send', methods=['POST'])
+@app.route("/message/send", methods=["POST"])
 def send_message():
     try:
         message = message_handler.create_message(
