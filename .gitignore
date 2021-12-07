@@ -1,3 +1,4 @@
 .DS_Store
 data/data
 data/nlp/dataset.txt
+data/nlp/tatoeba.txt
