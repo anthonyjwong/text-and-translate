@@ -1,4 +1,3 @@
 .DS_Store
 data/data
-data/nlp/OpenNMT-py
 data/nlp/dataset.txt

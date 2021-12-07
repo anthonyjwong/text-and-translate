@@ -83,7 +83,8 @@ class Message(Base):
             "sender": self.sender,
             "receiver": self.receiver,
             "sent_at": self.sent_at,
-            "message_content": self.message_content
+            "message_content": self.message_content,
+            "lang": self.lang
         }
 
 

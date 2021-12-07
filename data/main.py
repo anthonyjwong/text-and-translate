@@ -1,12 +1,14 @@
 from datetime import datetime
+from os import getenv
+
+from flask import Flask, request
+
 import db.handlers.message_handler as message_handler
 import db.handlers.user_handler as user_handler
 from db.models import instantiate_tables
 from db.sqlalchemy_db import init_db_connection
-from flask import Flask
-from flask import request
+from nlp.model import init_model
 from nlp.translate import translate_conversation
-from os import getenv
 
 port = getenv("PORT") or 3000
 
@@ -62,6 +64,8 @@ def send_message():
 
 
 def init_app():
+    print("initializing app...")
+    init_model()
     init_db_connection()
     instantiate_tables()
 

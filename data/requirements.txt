@@ -1,3 +1,8 @@
 flask
 sqlalchemy
 psycopg2
+spacy
+torch
+torchvision
+torchtext
+nltk
