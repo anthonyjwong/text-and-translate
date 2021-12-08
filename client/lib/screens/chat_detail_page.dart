@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
+import 'dart:convert';
+
 import 'package:chat_app/models/chat_message_model.dart';
 import 'package:colorful_safe_area/colorful_safe_area.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 const String url = "0.0.0.0:3000";
 const String user_1 = "fdd0de83-263e-4981-ab40-957091339396";
@@ -25,13 +26,14 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
         "sender": user_1,
         "receiver": user_2,
         "content": text,
+        "lang": "en",
       };
 
       await http.post(Uri.parse("http://$url/message/send"),
           headers: {"Content-Type": "application/json"},
           body: json.encode(body));
-      _getMessages();
     }
+    _getMessages();
   }
 
   void _getMessages() async {

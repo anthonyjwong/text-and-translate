@@ -47,7 +47,7 @@ def get_all_messages():
         return [message.serialize for message in messages]
 
 
-def create_message(sender: str, receiver: str, sent_at: datetime, message_content: str, serialize: bool = True):
+def create_message(sender: str, receiver: str, sent_at: datetime, message_content: str, lang: str, serialize: bool = True):
     """
     Create a new message based on an associated name
     :param name: ex. "AJ Wong"
@@ -56,7 +56,7 @@ def create_message(sender: str, receiver: str, sent_at: datetime, message_conten
     with create_session() as session:
         try:
             message = Message(sender=sender, receiver=receiver,
-                              sent_at=sent_at, message_content=message_content)
+                              sent_at=sent_at, message_content=message_content, lang=lang)
             session.add(message)
             # must commit before new message can be fetched from DB table
             session.commit()

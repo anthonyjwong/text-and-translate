@@ -1,9 +1,10 @@
-from torch import bmm, cat, zeros
+from torch import bmm, cat, device, zeros
+from torch.cuda import is_available as cuda_is_available
 from torch.cuda import memory
 from torch.nn import GRU, Dropout, Embedding, Linear, Module
 from torch.nn.functional import log_softmax, relu, softmax
 
-from nlp.model import DEVICE
+DEVICE = device("cuda" if cuda_is_available() else "cpu")
 
 
 class Encoder(Module):
@@ -24,7 +25,7 @@ class Encoder(Module):
 
 class Decoder(Module):
     def __init__(self, output_size, memory_size, dropout=0.1, max_len=50):
-        super(Encoder, self).__init__()
+        super(Decoder, self).__init__()
         self.max_len = max_len
 
         self.memory_size = memory_size

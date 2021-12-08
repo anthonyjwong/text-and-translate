@@ -1,13 +1,18 @@
-from nlp.model import normalize
+from nlp.model import get_translator, translate
 
 
-def translate_conversation(convo: "list[str]", lang: str):
+def translate_conversation(convo: "list[str]", src_lang: str, tgt_lang: str):
     translated = []
-    for msg in convo:
-        if msg["lang"] == lang:  # no need to translate
+    encoder, decoder = get_translator(src_lang, tgt_lang)
+    for i, msg in enumerate(convo):
+        if msg["lang"] == tgt_lang:  # no need to translate
             translated.append(msg)
             continue
 
-        norm_msg = normalize(msg["message_content"])
+        translation = translate(
+            msg["message_content"], encoder, decoder, src_lang, tgt_lang)
+
+        translated.append(msg)
+        translated[i]["message_content"] = " ".join(translation)
 
     return translated

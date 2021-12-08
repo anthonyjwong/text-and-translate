@@ -51,6 +51,8 @@ def init_db_connection():
     """
     Instantiates a singleton DB engine
     """
+    print("connecting to database...")
+
     global engine, Session
     if engine != None:
         return

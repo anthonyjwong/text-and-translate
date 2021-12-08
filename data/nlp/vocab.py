@@ -8,8 +8,8 @@ class Vocab:
     def __init__(self, data_iter, lang):
         self.lang = lang
         self.word2index = {}
-        self.index2word = {}
-        self.word_freq = {0: "SOS", 1: "EOS"}
+        self.index2word = {0: "SOS", 1: "EOS"}
+        self.word_freq = {}
         self.num_words = 2
 
         for datum in data_iter:
@@ -17,10 +17,15 @@ class Vocab:
             for sent in sents:
                 words = word_tokenize(sent)
                 for word in words:
-                    if word not in self.word2index:
-                        self.word2index[word] = self.num_words
-                        self.index2word[self.num_words] = word
-                        self.num_words += 1
-                        self.word_freq[word] = 1
-                    else:
-                        self.word2count[word] += 1
+                    self.add_word(word)
+
+    def add_word(self, word):
+        if word not in self.word2index:
+            self.word2index[word] = self.num_words
+            self.index2word[self.num_words] = word
+            self.num_words += 1
+            self.word_freq[word] = 1
+        else:
+            self.word_freq[word] += 1
+
+        return self.word2index[word]

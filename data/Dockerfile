@@ -11,6 +11,7 @@ RUN pip install -r requirements.txt
 # Download spacy dependencies
 RUN python3 -m spacy download en_core_web_sm
 RUN python3 -m spacy download es_core_news_sm
+RUN python3 -m nltk.downloader punkt
 
 COPY . .
 

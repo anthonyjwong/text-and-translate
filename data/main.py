@@ -23,6 +23,12 @@ def get_conversation(user_1, user_2):
     conversation = message_handler.get_conversation(user_1, user_2)
     conversation = sorted(conversation, key=lambda x: x["sent_at"])
 
+    tgt_lang = user_handler.get_user_by_id(user_1)["lang"]
+    src_lang = user_handler.get_user_by_id(user_2)["lang"]
+
+    print(tgt_lang)
+    conversation = translate_conversation(conversation, src_lang, tgt_lang)
+
     return {"messages": conversation}, 200
 
 
@@ -56,7 +62,8 @@ def send_message():
             request.json["sender"],
             request.json["receiver"],
             datetime.now(),
-            request.json["content"]
+            request.json["content"],
+            request.json["lang"]
         )
     except Exception:
         return {"error": "couldn't send message"}, 500

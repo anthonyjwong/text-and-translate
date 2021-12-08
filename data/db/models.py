@@ -92,5 +92,6 @@ def instantiate_tables():
     """
     Define all tables, should be called only once
     """
+    print("instantiating db tables...")
     for table in [User, Message]:
         create_table(table)
