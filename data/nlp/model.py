@@ -209,10 +209,6 @@ def train_iters(encoder: Encoder, decoder: Decoder, train_set, src_lang, tgt_lan
         loss = train(input_tensor, target_tensor, encoder, decoder,
                      encoder_optimizer, decoder_optimizer, loss_fn)
 
-        if i % (train_len // NUM_INTERVALS) == 0:
-            total_loss += loss
-            print(f"{(i / len(train_set)) * 100}%, AVG LOSS: {total_loss / (i+1)}")
-
 
 def train_model(model, train, src_lang, tgt_lang):
     """
