@@ -5,7 +5,7 @@ Instructions to run on macOS:
   - `flutter run`
 2. Run backend
   - `cd data`
-  - use `build-run-al.sh` script
+  - use `build-run-all.sh` script
 
 Backend takes it bit before coming online. Has to init db and model first.
 
